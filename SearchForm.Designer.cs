@@ -257,6 +257,7 @@
             this.BookFlightButton.TabIndex = 20;
             this.BookFlightButton.Text = "Book Flight";
             this.BookFlightButton.UseVisualStyleBackColor = true;
+            this.BookFlightButton.Click += new System.EventHandler(this.BookFlightButton_Click);
             // 
             // ExitButton
             // 

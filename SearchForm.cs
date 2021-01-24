@@ -337,5 +337,72 @@ namespace AirLines_S3
         {
             Application.Exit();
         }
+        public static int RouteID;
+        public static string OutboundFromAirport;
+        public static string OutboundToAirport;
+        public static string OutboundDate;
+        public static string OutboundNum;
+
+        public static bool isReturn;
+        public static int ReturnRouteID;
+        public static string ReturnFromAirport;
+        public static string ReturnToAirport;
+        public static string ReturnDate;
+        public static string ReturnNum;
+        private void BookFlightButton_Click(object sender, EventArgs e)
+        {
+            connection = new SqlConnection(conString);
+            try
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand($"SELECT ID FROM dbo.Routes WHERE DepartureAirportID LIKE '%{FromComboBox.SelectedValue}%' AND ArrivalAirportID LIKE '%{ToComboBox.SelectedValue}%'", connection);
+                RouteID = Convert.ToInt32(command.ExecuteScalar());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+
+            }
+
+            OutboundFromAirport = OutboundsGridView.Rows[0].Cells[3].Value.ToString();
+            OutboundToAirport = OutboundsGridView.Rows[0].Cells[4].Value.ToString();
+            OutboundDate = DateTime.Parse(OutboundsGridView.Rows[0].Cells[1].Value.ToString()).ToString("dd.MM.yyyy");
+            OutboundNum = OutboundsGridView.Rows[0].Cells[5].Value.ToString();
+            if (ReturnRadio.Checked == true)
+            {
+                isReturn = true;
+
+                connection = new SqlConnection(conString);
+                try
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand($"SELECT ID FROM dbo.Routes WHERE DepartureAirportID LIKE '%{ToComboBox.SelectedValue}%' AND ArrivalAirportID LIKE '%{FromComboBox.SelectedValue}%'", connection);
+                    ReturnRouteID = Convert.ToInt32(command.ExecuteScalar());
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                finally
+                {
+
+                }
+
+                ReturnFromAirport = ReturnGridView.Rows[0].Cells[3].Value.ToString();
+                ReturnToAirport = ReturnGridView.Rows[0].Cells[4].Value.ToString();
+                ReturnDate = DateTime.Parse(ReturnGridView.Rows[0].Cells[1].Value.ToString()).ToString("dd.MM.yyyy");
+                ReturnNum = ReturnGridView.Rows[0].Cells[5].Value.ToString();
+            }
+            else
+            {
+                isReturn = false;
+            }
+            BookingForm form = new BookingForm();
+            this.Hide();
+            form.Show();
+        }
     }
 }
