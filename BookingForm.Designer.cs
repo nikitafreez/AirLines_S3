@@ -331,6 +331,7 @@
             this.ConfirmButton.TabIndex = 28;
             this.ConfirmButton.Text = "Confirm booking";
             this.ConfirmButton.UseVisualStyleBackColor = true;
+            this.ConfirmButton.Click += new System.EventHandler(this.BackButton_Click);
             // 
             // BookingForm
             // 
