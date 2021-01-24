@@ -1,6 +1,6 @@
 ﻿namespace AirLines_S3
 {
-    partial class Form1
+    partial class SearchForm
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -47,6 +47,8 @@
             this.CheckDateBox = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
             this.ReturnGridView = new System.Windows.Forms.DataGridView();
+            this.BookFlightButton = new System.Windows.Forms.Button();
+            this.ExitButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.OutboundsGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ReturnGridView)).BeginInit();
             this.SuspendLayout();
@@ -230,6 +232,7 @@
             this.label6.Size = new System.Drawing.Size(134, 17);
             this.label6.TabIndex = 19;
             this.label6.Text = "Return flight details:\r\n";
+            this.label6.Visible = false;
             // 
             // ReturnGridView
             // 
@@ -244,12 +247,34 @@
             this.ReturnGridView.RowTemplate.Height = 24;
             this.ReturnGridView.Size = new System.Drawing.Size(776, 271);
             this.ReturnGridView.TabIndex = 18;
+            this.ReturnGridView.Visible = false;
             // 
-            // Form1
+            // BookFlightButton
+            // 
+            this.BookFlightButton.Location = new System.Drawing.Point(312, 781);
+            this.BookFlightButton.Name = "BookFlightButton";
+            this.BookFlightButton.Size = new System.Drawing.Size(169, 37);
+            this.BookFlightButton.TabIndex = 20;
+            this.BookFlightButton.Text = "Book Flight";
+            this.BookFlightButton.UseVisualStyleBackColor = true;
+            // 
+            // ExitButton
+            // 
+            this.ExitButton.Location = new System.Drawing.Point(714, 791);
+            this.ExitButton.Name = "ExitButton";
+            this.ExitButton.Size = new System.Drawing.Size(77, 37);
+            this.ExitButton.TabIndex = 21;
+            this.ExitButton.Text = "Exit";
+            this.ExitButton.UseVisualStyleBackColor = true;
+            this.ExitButton.Click += new System.EventHandler(this.ExitButton_Click);
+            // 
+            // SearchForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 840);
+            this.Controls.Add(this.ExitButton);
+            this.Controls.Add(this.BookFlightButton);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.ReturnGridView);
             this.Controls.Add(this.CheckDateBox);
@@ -269,7 +294,7 @@
             this.Controls.Add(this.FromComboBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.OutboundsGridView);
-            this.Name = "Form1";
+            this.Name = "SearchForm";
             this.Text = "Search for flights";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.OutboundsGridView)).EndInit();
@@ -300,6 +325,8 @@
         private System.Windows.Forms.CheckBox CheckDateBox;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.DataGridView ReturnGridView;
+        private System.Windows.Forms.Button BookFlightButton;
+        private System.Windows.Forms.Button ExitButton;
     }
 }
 

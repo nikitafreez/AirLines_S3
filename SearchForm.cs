@@ -12,14 +12,14 @@ using System.Windows.Forms;
 
 namespace AirLines_S3
 {
-    public partial class Form1 : Form
+    public partial class SearchForm : Form
     {
         public String conString = @"Data Source=LAPTOP-GTKGDTGS\NIKITASERVER;Initial Catalog=Session3_10;Integrated Security=True";
 
         private SqlConnection connection;
         private DataSet dataSet;
         private SqlDataAdapter dataAdapter;
-        public Form1()
+        public SearchForm()
         {
             InitializeComponent();
 
@@ -93,6 +93,8 @@ namespace AirLines_S3
             CheckDateBox.Font = new Font(font.Families[0], 8);
             label6.Font = new Font(font.Families[0], 8);
             ReturnGridView.Font = new Font(font.Families[0], 8);
+            BookFlightButton.Font = new Font(font.Families[0], 8);
+            ExitButton.Font = new Font(font.Families[0], 8);
         }
 
 
@@ -139,12 +141,16 @@ namespace AirLines_S3
         {
             label4.Visible = true;
             ReturnDatePicker.Visible = true;
+            label6.Visible = true;
+            ReturnGridView.Visible = true;
         }
 
         private void OneWayRadio_CheckedChanged(object sender, EventArgs e)
         {
             label4.Visible = false;
             ReturnDatePicker.Visible = false;
+            label6.Visible = false;
+            ReturnGridView.Visible = false;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -325,6 +331,11 @@ namespace AirLines_S3
             OneWayRadio.Checked = true;
             CheckDateBox.Checked = false;
             GetTable();
+        }
+
+        private void ExitButton_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
