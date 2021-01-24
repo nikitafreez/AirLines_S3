@@ -90,6 +90,7 @@ namespace AirLines_S3
             ReturnDatePicker.Font = new Font(font.Families[0], 8);
             OutbondDatePicker.Font = new Font(font.Families[0], 8);
             SearchButton.Font = new Font(font.Families[0], 8);
+            CheckDateBox.Font = new Font(font.Families[0], 8);
         }
 
 
@@ -163,15 +164,36 @@ namespace AirLines_S3
             {
                 if (!string.IsNullOrEmpty(FromComboBox.Text))
                 {
-                    (OutboundsGridView.DataSource as DataTable).DefaultView.RowFilter = string.Format("FromAirport = '{0}'", FromComboBox.Text);
+                    if (CheckDateBox.Checked == false)
+                    {
+                        (OutboundsGridView.DataSource as DataTable).DefaultView.RowFilter = string.Format("FromAirport = '{0}'", FromComboBox.Text);
+                    }
+                    else
+                    {
+                        (OutboundsGridView.DataSource as DataTable).DefaultView.RowFilter = string.Format("FromAirport = '{0}' AND Date = '{1}'", FromComboBox.Text, OutbondDatePicker.Value.ToString("dd.MM.yyyy"));
+                    }
                 }
                 if (!string.IsNullOrEmpty(ToComboBox.Text))
                 {
-                    (OutboundsGridView.DataSource as DataTable).DefaultView.RowFilter = string.Format("ToAirport = '{0}'", ToComboBox.Text);
+                    if (CheckDateBox.Checked == false)
+                    {
+                        (OutboundsGridView.DataSource as DataTable).DefaultView.RowFilter = string.Format("ToAirport = '{0}'", ToComboBox.Text);
+                    }
+                    else
+                    {
+                        (OutboundsGridView.DataSource as DataTable).DefaultView.RowFilter = string.Format("ToAirport = '{0}' AND Date = '{1}'", ToComboBox.Text, OutbondDatePicker.Value.ToString("dd.MM.yyyy"));
+                    }
                 }
                 if (!string.IsNullOrEmpty(FromComboBox.Text) && !string.IsNullOrEmpty(ToComboBox.Text))
                 {
-                    (OutboundsGridView.DataSource as DataTable).DefaultView.RowFilter = string.Format("FromAirport = '{0}' AND ToAirport = '{1}'", FromComboBox.Text, ToComboBox.Text);
+                    if (CheckDateBox.Checked == false)
+                    {
+                        (OutboundsGridView.DataSource as DataTable).DefaultView.RowFilter = string.Format("FromAirport = '{0}' AND ToAirport = '{1}'", FromComboBox.Text, ToComboBox.Text);
+                    }
+                    else
+                    {
+                        (OutboundsGridView.DataSource as DataTable).DefaultView.RowFilter = string.Format("FromAirport = '{0}' AND ToAirport = '{1}' AND Date = '{2}'", FromComboBox.Text, ToComboBox.Text, OutbondDatePicker.Value.ToString("dd.MM.yyyy"));
+                    }
                 }
 
                 connection = new SqlConnection(conString);
@@ -220,6 +242,7 @@ namespace AirLines_S3
             FromComboBox.Text = null;
             ToComboBox.Text = null;
             OneWayRadio.Checked = true;
+            CheckDateBox.Checked = false;
             GetTable();
         }
     }
