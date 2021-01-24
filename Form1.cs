@@ -91,6 +91,8 @@ namespace AirLines_S3
             OutbondDatePicker.Font = new Font(font.Families[0], 8);
             SearchButton.Font = new Font(font.Families[0], 8);
             CheckDateBox.Font = new Font(font.Families[0], 8);
+            label6.Font = new Font(font.Families[0], 8);
+            ReturnGridView.Font = new Font(font.Families[0], 8);
         }
 
 
@@ -212,6 +214,85 @@ namespace AirLines_S3
                         else
                         {
                             OutboundsGridView.Rows[i].DefaultCellStyle.BackColor = Color.LawnGreen;
+                        }
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+
+                //////////////////////////////////////////////////////////////////////////////
+                connection = new SqlConnection(conString);
+                try
+                {
+                    connection.Open();
+                    dataAdapter = new SqlDataAdapter("SELECT dbo.Schedules.ID, Date, Time, (SELECT IATACode FROM dbo.Airports WHERE ID = dbo.Routes.DepartureAirportID) AS FromAirport, (SELECT IATACode FROM dbo.Airports WHERE ID = dbo.Routes.ArrivalAirportID) AS ToAirport, FlightNumber, dbo.Aircrafts.Name AS Aircraft, CAST(EconomyPrice as numeric(10,0)) AS Price FROM dbo.Schedules" +
+                        " INNER JOIN dbo.Routes ON dbo.Schedules.RouteID = dbo.Routes.ID JOIN dbo.Airports ON dbo.Routes.DepartureAirportID = dbo.Airports.ID" +
+                        " INNER JOIN dbo.Aircrafts ON dbo.Schedules.AircraftID = dbo.Aircrafts.ID" +
+                       string.Format(" WHERE (SELECT IATACode FROM dbo.Airports WHERE ID = dbo.Routes.DepartureAirportID) LIKE '%{0}%' AND (SELECT IATACode FROM dbo.Airports WHERE ID = dbo.Routes.ArrivalAirportID) LIKE '%{1}%'", ToComboBox.Text, FromComboBox.Text), connection);
+                    dataSet = new DataSet();
+                    DataTable dt = dataSet.Tables.Add("dbo.Schedules");
+                    dataAdapter.Fill(dt);
+                    ReturnGridView.DataSource = dataSet.Tables["dbo.Schedules"];
+
+                    for (int i = 0; i < ReturnGridView.Rows.Count; i++)
+                    {
+                        int id = Convert.ToInt32(ReturnGridView.Rows[i].Cells[0].Value);
+                        SqlCommand command = new SqlCommand($"SELECT Confirmed FROM dbo.Schedules WHERE ID LIKE '%{id}%'", connection);
+                        int status = Convert.ToInt32(command.ExecuteScalar());
+                        if (status == 0)
+                        {
+                            ReturnGridView.Rows[i].DefaultCellStyle.BackColor = Color.Red;
+                        }
+                        else
+                        {
+                            ReturnGridView.Rows[i].DefaultCellStyle.BackColor = Color.LawnGreen;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+
+                if (!string.IsNullOrEmpty(FromComboBox.Text) && !string.IsNullOrEmpty(ToComboBox.Text))
+                {
+                    if (CheckDateBox.Checked == false)
+                    {
+                        (ReturnGridView.DataSource as DataTable).DefaultView.RowFilter = string.Format("FromAirport = '{0}' AND ToAirport = '{1}'", ToComboBox.Text, FromComboBox.Text);
+                    }
+                    else
+                    {
+                        (ReturnGridView.DataSource as DataTable).DefaultView.RowFilter = string.Format("FromAirport = '{0}' AND ToAirport = '{1}' AND Date = '{2}'", ToComboBox.Text, FromComboBox.Text, ReturnDatePicker.Value.ToString("dd.MM.yyyy"));
+                    }
+                }
+
+                connection = new SqlConnection(conString);
+                try
+                {
+                    connection.Open();
+                    for (int i = 0; i < ReturnGridView.Rows.Count; i++)
+                    {
+                        int id = Convert.ToInt32(ReturnGridView.Rows[i].Cells[0].Value);
+                        SqlCommand command = new SqlCommand($"SELECT Confirmed FROM dbo.Schedules WHERE ID LIKE '%{id}%'", connection);
+                        int status = Convert.ToInt32(command.ExecuteScalar());
+                        if (status == 0)
+                        {
+                            ReturnGridView.Rows[i].DefaultCellStyle.BackColor = Color.Red;
+                        }
+                        else
+                        {
+                            ReturnGridView.Rows[i].DefaultCellStyle.BackColor = Color.LawnGreen;
                         }
                     }
 

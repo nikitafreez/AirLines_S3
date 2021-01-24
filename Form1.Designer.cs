@@ -45,7 +45,10 @@
             this.DeleteToButton = new System.Windows.Forms.Button();
             this.ClearButton = new System.Windows.Forms.Button();
             this.CheckDateBox = new System.Windows.Forms.CheckBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.ReturnGridView = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.OutboundsGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ReturnGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // OutboundsGridView
@@ -219,11 +222,36 @@
             this.CheckDateBox.Text = "Check with date";
             this.CheckDateBox.UseVisualStyleBackColor = true;
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(16, 428);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(134, 17);
+            this.label6.TabIndex = 19;
+            this.label6.Text = "Return flight details:\r\n";
+            // 
+            // ReturnGridView
+            // 
+            this.ReturnGridView.AllowUserToAddRows = false;
+            this.ReturnGridView.AllowUserToDeleteRows = false;
+            this.ReturnGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.ReturnGridView.Location = new System.Drawing.Point(15, 458);
+            this.ReturnGridView.MultiSelect = false;
+            this.ReturnGridView.Name = "ReturnGridView";
+            this.ReturnGridView.ReadOnly = true;
+            this.ReturnGridView.RowHeadersWidth = 51;
+            this.ReturnGridView.RowTemplate.Height = 24;
+            this.ReturnGridView.Size = new System.Drawing.Size(776, 271);
+            this.ReturnGridView.TabIndex = 18;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 634);
+            this.ClientSize = new System.Drawing.Size(800, 840);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.ReturnGridView);
             this.Controls.Add(this.CheckDateBox);
             this.Controls.Add(this.ClearButton);
             this.Controls.Add(this.DeleteToButton);
@@ -245,6 +273,7 @@
             this.Text = "Search for flights";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.OutboundsGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ReturnGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -269,6 +298,8 @@
         private System.Windows.Forms.Button DeleteToButton;
         private System.Windows.Forms.Button ClearButton;
         private System.Windows.Forms.CheckBox CheckDateBox;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.DataGridView ReturnGridView;
     }
 }
 
